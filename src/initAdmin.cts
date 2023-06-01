@@ -1,5 +1,5 @@
 import { Category } from "./mongoose/category.entity.cjs";
-import BaseEventModel, { DragAndDropAttemptEvent, ScoreEvent, TaskCompletionEvent } from "./mongoose/gameEvent.entity.cjs";
+import { DragAndDropAttemptLog, ScoreLog, TaskCompletionLog } from "./mongoose/gameEvent.entity.cjs";
 import { User } from "./mongoose/user.entity.cjs";
 
 
@@ -8,9 +8,9 @@ export const initAdmin =  () => {
         resources: [
             Category,
             User,
-            ScoreEvent,
-            TaskCompletionEvent,
-            DragAndDropAttemptEvent
+            ScoreLog,
+            TaskCompletionLog,
+            DragAndDropAttemptLog
         ]
     };
 }

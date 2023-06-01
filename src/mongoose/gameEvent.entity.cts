@@ -95,10 +95,12 @@ const DragAndDropAttemptEvent = BaseEventModel.discriminator  <DragAndDropAttemp
 );
             
 
+export const ScoreLog = mongoose.model<ScoreEvent>("ScoreEvent", ScoreEvent.schema);
+export const TaskCompletionLog = mongoose.model<TaskCompletionEvent>("TaskCompletionEvent", TaskCompletionEvent.schema);
+export const DragAndDropAttemptLog = mongoose.model<DragAndDropAttempt>("DragAndDropAttemptEvent", DragAndDropAttemptEvent.schema);
 
 
 
 
 export default BaseEventModel;
 
-export { ScoreEvent, TaskCompletionEvent, DragAndDropAttemptEvent }; // Exporting interfaces
