@@ -32,7 +32,7 @@ interface ScoreEvent extends BaseEvent {
   score: number;
 }
 
-BaseEventModel.discriminator<ScoreEvent>(
+const ScoreEvent = BaseEventModel.discriminator<ScoreEvent>(
   "ScoreEvent",
   new mongoose.Schema({
     score: {
@@ -49,7 +49,7 @@ interface TaskCompletionEvent extends BaseEvent {
   successful: boolean;
 }
 
-BaseEventModel.discriminator<TaskCompletionEvent>(
+const TaskCompletionEvent = BaseEventModel.discriminator<TaskCompletionEvent>(
   "TaskCompletionEvent",
   new mongoose.Schema({
     taskName: {
@@ -69,40 +69,36 @@ BaseEventModel.discriminator<TaskCompletionEvent>(
   );
 
 
-
-
-// Create a GameEvent for DragAndDrop events where the user drags an item from one container to another. 
-// Record correct attempts and incorrect attempts. Also record what the wronmg answer was.
-
-interface DragAndDropEvent extends BaseEvent {
-    taskName: string;
-    timeTaken: number;
-    successful: boolean;
-    wrongAnswer: string;
+interface DragAndDropAttempt {
+    question: string;
+    answer: string;
+    status: boolean;
 }
 
-BaseEventModel.discriminator<DragAndDropEvent>(
-    "DragAndDropEvent",
+// DragAndDropItem
+const DragAndDropAttemptEvent = BaseEventModel.discriminator  <DragAndDropAttempt>(
+    "DragAndDropItem",
     new mongoose.Schema({
-        taskName: {
+        question: {
             type: String,
             required: true,
         },
-        timeTaken: {
-            type: Number,
+        answer: {
+            type: String,
             required: true,
         },
-        successful: {
+        status: {
             type: Boolean,
-            required: true,
-        },
-        wrongAnswers: {
-            type: String,
-            ref: "DragAndDropItem",
             required: true,
         },
     })
 );
+            
+
+
+
 
 
 export default BaseEventModel;
+
+export { ScoreEvent, TaskCompletionEvent, DragAndDropAttemptEvent }; // Exporting interfaces
