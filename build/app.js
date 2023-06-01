@@ -9,11 +9,6 @@ import "dotenv/config";
 const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cors);
-app.get("/ping", async (_req, res) => {
-    res.send({
-        message: "pong",
-    });
-});
 const start = async () => {
     const app = express();
     connect(process.env.MONGO_URL)
@@ -26,6 +21,11 @@ const start = async () => {
         const admin = new AdminJS(initAdmin());
         const adminRouter = AdminJSExpress.default.buildRouter(admin);
         app.use(admin.options.rootPath, adminRouter);
+        app.get("/ping", async (_req, res) => {
+            res.send({
+                message: "pong",
+            });
+        });
         app.listen(PORT, () => {
             console.log(`AdminJS started on http://localhost:${PORT}${admin.options.rootPath}`);
         });

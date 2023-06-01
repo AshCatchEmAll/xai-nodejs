@@ -19,10 +19,6 @@ app.get("/ping", async (_req, res) => {
 });
 
 const start = async () => {
-  const app = express();
-
-
-
   connect(process.env.MONGO_URL!)
     .then(() => {
       console.log("Connected to MongoDB");
@@ -33,6 +29,7 @@ const start = async () => {
       const admin = new AdminJS(initAdmin());
       const adminRouter = AdminJSExpress.default.buildRouter(admin);
       app.use(admin.options.rootPath, adminRouter);
+
       app.listen(PORT, () => {
         console.log(
           `AdminJS started on http://localhost:${PORT}${admin.options.rootPath}`
