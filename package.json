@@ -2,8 +2,9 @@
   "name": "xai-logging",
   "version": "0.0.0",
   "private": true,
+  "main": "build/app.js",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node ./build/app.js",
     "build": "npx tsc",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/app.js\""
   },

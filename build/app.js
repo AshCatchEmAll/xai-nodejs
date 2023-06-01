@@ -4,9 +4,11 @@ import * as AdminJSExpress from "@adminjs/express";
 import { initAdmin } from "./initAdmin.cjs";
 import { connect } from "mongoose";
 import * as AdminJSMongoose from "@adminjs/mongoose";
+import cors from "cors";
 import "dotenv/config";
 const PORT = process.env.PORT || 3000;
 const app = express();
+app.use(cors);
 app.get("/ping", async (_req, res) => {
     res.send({
         message: "pong",
