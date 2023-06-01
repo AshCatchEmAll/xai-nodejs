@@ -1,0 +1,1 @@
+{"version":3,"file":"category.entity.cjs","sourceRoot":"","sources":["../../src/mongoose/category.entity.cts"],"names":[],"mappings":";;;AAAA,uCAA+C;AAMlC,QAAA,cAAc,GAAG,IAAI,iBAAM,CACtC;IACE,KAAK,EAAE,EAAE,IAAI,EAAE,QAAQ,EAAE,QAAQ,EAAE,IAAI,EAAE;CAC1C,EACD,EAAE,UAAU,EAAE,IAAI,EAAE,CACrB,CAAA;AAEY,QAAA,QAAQ,GAAG,IAAA,gBAAK,EAAY,UAAU,EAAE,sBAAc,CAAC,CAAC"}
