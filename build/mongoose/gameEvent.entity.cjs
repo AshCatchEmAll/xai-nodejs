@@ -23,7 +23,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.DragAndDropAttemptLog = exports.TaskCompletionLog = exports.ScoreLog = exports.GameEventTypes = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
+var GameEventTypes;
+(function (GameEventTypes) {
+    GameEventTypes["SCORE"] = "ScoreEvent";
+    GameEventTypes["TASK_COMPLETION"] = "TaskCompletionEvent";
+    GameEventTypes["DRAG_AND_DROP_ATTEMPT"] = "DragAndDropAttemptEvent";
+})(GameEventTypes = exports.GameEventTypes || (exports.GameEventTypes = {}));
 const BaseEventSchema = new mongoose_1.Schema({
     userId: {
         type: mongoose_1.Schema.Types.ObjectId,
@@ -37,13 +44,13 @@ const BaseEventSchema = new mongoose_1.Schema({
     },
 }, { discriminatorKey: "eventType", timestamps: true }); // This field will store the name of the event type
 const BaseEventModel = mongoose_1.default.model("BaseEvent", BaseEventSchema);
-BaseEventModel.discriminator("ScoreEvent", new mongoose_1.default.Schema({
+const ScoreEvent = BaseEventModel.discriminator(GameEventTypes.SCORE, new mongoose_1.default.Schema({
     score: {
         type: Number,
         required: true,
     },
 }));
-BaseEventModel.discriminator("TaskCompletionEvent", new mongoose_1.default.Schema({
+const TaskCompletionEvent = BaseEventModel.discriminator(GameEventTypes.TASK_COMPLETION, new mongoose_1.default.Schema({
     taskName: {
         type: String,
         required: true,
@@ -57,24 +64,23 @@ BaseEventModel.discriminator("TaskCompletionEvent", new mongoose_1.default.Schem
         required: true,
     },
 }));
-BaseEventModel.discriminator("DragAndDropEvent", new mongoose_1.default.Schema({
-    taskName: {
+// DragAndDropItem
+const DragAndDropAttemptEvent = BaseEventModel.discriminator(GameEventTypes.DRAG_AND_DROP_ATTEMPT, new mongoose_1.default.Schema({
+    question: {
         type: String,
         required: true,
     },
-    timeTaken: {
-        type: Number,
+    answer: {
+        type: String,
         required: true,
     },
-    successful: {
+    status: {
         type: Boolean,
         required: true,
     },
-    wrongAnswers: {
-        type: String,
-        ref: "DragAndDropItem",
-        required: true,
-    },
 }));
+exports.ScoreLog = mongoose_1.default.model(GameEventTypes.SCORE, ScoreEvent.schema);
+exports.TaskCompletionLog = mongoose_1.default.model(GameEventTypes.TASK_COMPLETION, TaskCompletionEvent.schema);
+exports.DragAndDropAttemptLog = mongoose_1.default.model(GameEventTypes.DRAG_AND_DROP_ATTEMPT, DragAndDropAttemptEvent.schema);
 exports.default = BaseEventModel;
 //# sourceMappingURL=gameEvent.entity.cjs.map

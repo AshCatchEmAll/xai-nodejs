@@ -1,5 +1,17 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+
+
+export enum GameEventTypes {
+  SCORE = "ScoreEvent",
+  TASK_COMPLETION = "TaskCompletionEvent",
+  DRAG_AND_DROP_ATTEMPT = "DragAndDropAttemptEvent",
+}
+
+
+
+
+
 interface BaseEvent extends Document {
   userId: Schema.Types.ObjectId;
   gameId: Schema.Types.ObjectId;
@@ -28,12 +40,12 @@ const BaseEventModel = mongoose.model<BaseEvent>("BaseEvent", BaseEventSchema);
  *****************/
 
 // ScoreEvent
-interface ScoreEvent extends BaseEvent {
+interface IScoreEvent extends BaseEvent {
   score: number;
 }
 
-const ScoreEvent = BaseEventModel.discriminator<ScoreEvent>(
-  "ScoreEvent",
+const ScoreEvent = BaseEventModel.discriminator<IScoreEvent>(
+   GameEventTypes.SCORE,
   new mongoose.Schema({
     score: {
       type: Number,
@@ -43,14 +55,14 @@ const ScoreEvent = BaseEventModel.discriminator<ScoreEvent>(
 );
 
 // TaskCompletionEvent
-interface TaskCompletionEvent extends BaseEvent {
+interface ITaskCompletionEvent extends BaseEvent {
   taskName: string;
   timeTaken: number;
   successful: boolean;
 }
 
-const TaskCompletionEvent = BaseEventModel.discriminator<TaskCompletionEvent>(
-  "TaskCompletionEvent",
+const TaskCompletionEvent = BaseEventModel.discriminator<ITaskCompletionEvent>(
+  GameEventTypes.TASK_COMPLETION ,
   new mongoose.Schema({
     taskName: {
       type: String,
@@ -69,15 +81,15 @@ const TaskCompletionEvent = BaseEventModel.discriminator<TaskCompletionEvent>(
   );
 
 
-interface DragAndDropAttempt {
+interface IDragAndDropAttempt {
     question: string;
     answer: string;
     status: boolean;
 }
 
 // DragAndDropItem
-const DragAndDropAttemptEvent = BaseEventModel.discriminator  <DragAndDropAttempt>(
-    "DragAndDropItem",
+const DragAndDropAttemptEvent = BaseEventModel.discriminator  <IDragAndDropAttempt>(
+    GameEventTypes.DRAG_AND_DROP_ATTEMPT ,
     new mongoose.Schema({
         question: {
             type: String,
@@ -95,9 +107,9 @@ const DragAndDropAttemptEvent = BaseEventModel.discriminator  <DragAndDropAttemp
 );
             
 
-export const ScoreLog = mongoose.model<ScoreEvent>("ScoreEvent", ScoreEvent.schema);
-export const TaskCompletionLog = mongoose.model<TaskCompletionEvent>("TaskCompletionEvent", TaskCompletionEvent.schema);
-export const DragAndDropAttemptLog = mongoose.model<DragAndDropAttempt>("DragAndDropAttemptEvent", DragAndDropAttemptEvent.schema);
+export const ScoreLog = mongoose.model<IScoreEvent>(GameEventTypes.SCORE , ScoreEvent.schema);
+export const TaskCompletionLog = mongoose.model<ITaskCompletionEvent>(GameEventTypes.TASK_COMPLETION , TaskCompletionEvent.schema);
+export const DragAndDropAttemptLog = mongoose.model<IDragAndDropAttempt>(GameEventTypes.DRAG_AND_DROP_ATTEMPT , DragAndDropAttemptEvent.schema);
 
 
 
